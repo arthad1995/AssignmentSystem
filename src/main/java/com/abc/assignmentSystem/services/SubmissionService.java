@@ -23,6 +23,14 @@ public class SubmissionService {
 		return new Response<>(true);
 	}
 	
+	public Response<List<Submission>> downloadSubmissionDetailByStudentId(int id){
+
+		
+
+	
+		return new Response<>(true,"",sd.findBystudentId(id));
+		
+	}
 	
 	
 	public int downloadSubmissionBySubmissionId(int id) {
@@ -62,6 +70,7 @@ public class SubmissionService {
 	
 	public Response<String> gradeAssignment(Submission sub){
 		try {
+			System.out.println(sub);
 			Submission s = sd.getOne(sub.getId());
 			s.setGraderId(sub.getGraderId());
 			s.setScore(sub.getScore());
@@ -71,5 +80,10 @@ public class SubmissionService {
 			return new Response<>(false,e.getMessage());
 		}
 		return new Response<>(true);
+	}
+
+	public Response<List<Submission>> getAllSubmission() {
+		// TODO Auto-generated method stub
+		return new Response<>(true, "",sd.findAll());
 	}
 }

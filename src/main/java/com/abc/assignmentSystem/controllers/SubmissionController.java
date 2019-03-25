@@ -37,7 +37,7 @@ public class SubmissionController {
 	@PostMapping
 	public Response<String> submit(@RequestParam("submission") String s, @RequestParam("file") MultipartFile file){
 		
-		
+		System.out.println(s);
 		//from json string to object
 		Submission submission = null;
 		try {
@@ -69,6 +69,21 @@ public class SubmissionController {
 	}
 	
 	
+	
+	//unchecked get single student all submissions
+	@GetMapping("/assignment/studentSubmissions/{id}")
+	public Response <List<Submission>> allByStudentSubmission(@PathVariable int id) throws Exception{
+		
+		return submissionService.downloadSubmissionDetailByStudentId(id);
+	}
+	
+	
+	@GetMapping
+	public Response <List<Submission>> allmission() throws Exception{
+		
+		return submissionService.getAllSubmission();
+	}
+	
 	//get single submission file
 	@GetMapping("/{id}")
 	public ResponseEntity<Resource> submissionDownload(@PathVariable int id) throws Exception{
@@ -77,6 +92,17 @@ public class SubmissionController {
 			return null;
 		return fileService.fileDownload(fileId);
 	}
+	
+	
+	//get single submission file detail
+	@GetMapping("/fileDeatil/{id}")
+	public Response<UploadFile> submissionfileDetailDownload(@PathVariable int id) throws Exception{
+		int fileId = submissionService.downloadSubmissionBySubmissionId(id);
+		if(fileId==-1)
+			return null;
+		return fileService.getSubmissionFileDetail(fileId);
+	}
+	
 	//get zip file that has all submission for that assignment
 	@GetMapping("assignment/{id}")
 	public ResponseEntity<Resource> assignmentSubmissionDownload(@PathVariable int id) throws Exception{

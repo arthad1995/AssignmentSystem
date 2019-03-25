@@ -189,4 +189,18 @@ public class FileService {
 		return new Response<List<UploadFile>>(true, l);
 	}
 	
+	public Response<UploadFile> getSubmissionFileDetail(int id){
+		UploadFile f;
+		try {
+		
+		
+			f =fileDao.findById(id).get();
+		
+		}
+		catch(Exception e) {
+			return new Response<UploadFile>(false, null);
+		}
+		return new Response<UploadFile>(true, f);
+	}
+	
 }
